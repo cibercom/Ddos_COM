@@ -61,7 +61,7 @@
 
                 <div class="card-body">
                     Target:
-                    <input type="text" class="form-control" id="target" placeholder="https://www.youtube.com/" /><br />
+                    <input type="text" class="form-control" id="target" placeholder="https://verificate.prm.do/" /><br />
 
                     <div class="row">
                         <div class="col-6">
