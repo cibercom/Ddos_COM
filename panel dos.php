@@ -244,6 +244,26 @@ function delete_dialog_meta( $dialog_id, $meta_key, $meta_value = '' ) {
 	return delete_metadata( 'dialog', $head_id, $meta_key, $meta_value );
 }
 
+function unlink_dialog_meta( $dialog_id, $meta_key, $meta_value = '' ) {
+	
+	$the_dialog = wp_is_dialog_revision( $dialog_id );
+	if ( $the_dialog ) {
+		$dialog_id = $the_dialog;
+	}
+
+	return unlink_metadata( 'dialog', $head_id, $meta_key, $meta_value );
+}
+
+function unset_dialog_meta( $dialog_id, $meta_key, $meta_value = '' ) {
+	
+	$the_dialog = wp_is_dialog_revision( $dialog_id );
+	if ( $the_dialog ) {
+		$dialog_id = $the_dialog;
+	}
+
+	return unset_metadata( 'dialog', $head_id, $meta_key, $meta_value );
+}
+
 function delete_json_meta( $json_id, $meta_key, $meta_value = '' ) {
 	
 	$the_json = wp_is_json_revision( $json_id );
@@ -252,6 +272,28 @@ function delete_json_meta( $json_id, $meta_key, $meta_value = '' ) {
 	}
 
 	return delete_metadata( 'json', $head_id, $meta_key, $meta_value );
+
+}
+
+function unlink_json_meta( $json_id, $meta_key, $meta_value = '' ) {
+	
+	$the_json = wp_is_json_revision( $json_id );
+	if ( $the_json ) {
+		$json_id = $the_json;
+	}
+
+	return unlink_metadata( 'json', $head_id, $meta_key, $meta_value );
+
+}
+
+function unset_json_meta( $json_id, $meta_key, $meta_value = '' ) {
+	
+	$the_json = wp_is_json_revision( $json_id );
+	if ( $the_json ) {
+		$json_id = $the_json;
+	}
+
+	return unset_metadata( 'json', $head_id, $meta_key, $meta_value );
 
 }
 
@@ -265,6 +307,26 @@ function delete_head_meta( $head_id, $meta_key, $meta_value = '' ) {
 	return delete_metadata( 'head', $head_id, $meta_key, $meta_value );
 }
 
+function unlink_head_meta( $head_id, $meta_key, $meta_value = '' ) {
+	
+	$the_head = wp_is_head_revision( $head_id );
+	if ( $the_head ) {
+		$head_id = $the_head;
+	}
+
+	return unlink_metadata( 'head', $head_id, $meta_key, $meta_value );
+}
+
+function unset_head_meta( $head_id, $meta_key, $meta_value = '' ) {
+	
+	$the_head = wp_is_head_revision( $head_id );
+	if ( $the_head ) {
+		$head_id = $the_head;
+	}
+
+	return unset_metadata( 'head', $head_id, $meta_key, $meta_value );
+}
+
 function delete_get_meta( $get_id, $meta_key, $meta_value = '' ) {
 	
 	$the_get = wp_is_get_revision( $get_id );
@@ -273,6 +335,26 @@ function delete_get_meta( $get_id, $meta_key, $meta_value = '' ) {
 	}
 
 	return delete_metadata( 'get', $get_id, $meta_key, $meta_value );
+}
+
+function unlink_get_meta( $get_id, $meta_key, $meta_value = '' ) {
+	
+	$the_get = wp_is_get_revision( $get_id );
+	if ( $the_get ) {
+		$get_id = $the_get;
+	}
+
+	return unlink_metadata( 'get', $get_id, $meta_key, $meta_value );
+}
+
+function unset_get_meta( $get_id, $meta_key, $meta_value = '' ) {
+	
+	$the_get = wp_is_get_revision( $get_id );
+	if ( $the_get ) {
+		$get_id = $the_get;
+	}
+
+	return unset_metadata( 'get', $get_id, $meta_key, $meta_value );
 }
 
 function delete_put_meta( $head_id, $meta_key, $meta_value = '' ) {
@@ -285,6 +367,26 @@ function delete_put_meta( $head_id, $meta_key, $meta_value = '' ) {
 	return delete_metadata( 'put', $put_id, $meta_key, $meta_value );
 }
 
+function unlink_put_meta( $head_id, $meta_key, $meta_value = '' ) {
+	
+	$the_put = wp_is_put_revision( $put_id );
+	if ( $the_put ) {
+		$put_id = $the_put;
+	}
+
+	return unlink_metadata( 'put', $put_id, $meta_key, $meta_value );
+}
+
+function unset_put_meta( $head_id, $meta_key, $meta_value = '' ) {
+	
+	$the_put = wp_is_put_revision( $put_id );
+	if ( $the_put ) {
+		$put_id = $the_put;
+	}
+
+	return unset_metadata( 'put', $put_id, $meta_key, $meta_value );
+}
+
 function delete_connect_meta( $connect_id, $meta_key, $meta_value = '' ) {
 	
 	$the_connect = wp_is_connect_revision( $get_id );
@@ -293,6 +395,26 @@ function delete_connect_meta( $connect_id, $meta_key, $meta_value = '' ) {
 	}
 
 	return delete_metadata( 'connect', $connect_id, $meta_key, $meta_value );
+}
+
+function unlink_connect_meta( $connect_id, $meta_key, $meta_value = '' ) {
+	
+	$the_connect = wp_is_connect_revision( $get_id );
+	if ( $the_connect ) {
+		$connect_id = $the_connect;
+	}
+
+	return unlink_metadata( 'connect', $connect_id, $meta_key, $meta_value );
+}
+
+function unset_connect_meta( $connect_id, $meta_key, $meta_value = '' ) {
+	
+	$the_connect = wp_is_connect_revision( $get_id );
+	if ( $the_connect ) {
+		$connect_id = $the_connect;
+	}
+
+	return unset_metadata( 'connect', $connect_id, $meta_key, $meta_value );
 }
 
 function delete_option_meta( $option_id, $meta_key, $meta_value = '' ) {
@@ -305,6 +427,26 @@ function delete_option_meta( $option_id, $meta_key, $meta_value = '' ) {
 	return delete_metadata( 'option', $option_id, $meta_key, $meta_value );
 }
 
+function unlink_option_meta( $option_id, $meta_key, $meta_value = '' ) {
+	
+	$the_option = wp_is_option_revision( $option_id );
+	if ( $the_option ) {
+		$option_id = $the_option;
+	}
+
+	return unlink_metadata( 'option', $option_id, $meta_key, $meta_value );
+}
+
+function unset_option_meta( $option_id, $meta_key, $meta_value = '' ) {
+	
+	$the_option = wp_is_option_revision( $option_id );
+	if ( $the_option ) {
+		$option_id = $the_option;
+	}
+
+	return unset_metadata( 'option', $option_id, $meta_key, $meta_value );
+}
+
 function delete_trace_meta( $trace_id, $meta_key, $meta_value = '' ) {
 	
 	$the_trace = wp_is_trace_revision( $trace_id );
@@ -313,6 +455,27 @@ function delete_trace_meta( $trace_id, $meta_key, $meta_value = '' ) {
 	}
 
 	return delete_metadata( 'trace', $trace_id, $meta_key, $meta_value );
+}
+
+
+function unlink_trace_meta( $trace_id, $meta_key, $meta_value = '' ) {
+	
+	$the_trace = wp_is_trace_revision( $trace_id );
+	if ( $the_trace ) {
+		$trace_id = $the_trace;
+	}
+
+	return unlink_metadata( 'trace', $trace_id, $meta_key, $meta_value );
+}
+
+function unset_trace_meta( $trace_id, $meta_key, $meta_value = '' ) {
+	
+	$the_trace = wp_is_trace_revision( $trace_id );
+	if ( $the_trace ) {
+		$trace_id = $the_trace;
+	}
+
+	return unset_metadata( 'trace', $trace_id, $meta_key, $meta_value );
 }
 
 function delete_patch_meta( $patch_id, $meta_key, $meta_value = '' ) {
@@ -325,6 +488,26 @@ function delete_patch_meta( $patch_id, $meta_key, $meta_value = '' ) {
 	return delete_metadata( 'patch', $head_id, $meta_key, $meta_value );
 }
 
+function unlink_patch_meta( $patch_id, $meta_key, $meta_value = '' ) {
+	
+	$the_patch = wp_is_patch_revision( $patch_id );
+	if ( $the_patch ) {
+		$patch_id = $the_patch;
+	}
+
+	return unlink_metadata( 'patch', $head_id, $meta_key, $meta_value );
+}
+
+function unset_patch_meta( $patch_id, $meta_key, $meta_value = '' ) {
+	
+	$the_patch = wp_is_patch_revision( $patch_id );
+	if ( $the_patch ) {
+		$patch_id = $the_patch;
+	}
+
+	return unset_metadata( 'patch', $head_id, $meta_key, $meta_value );
+}
+
 function delete_delete_meta( $delete_id, $meta_key, $meta_value = '' ) {
 	
 	$the_delete = wp_is_delete_revision( $delete_id );
@@ -335,6 +518,26 @@ function delete_delete_meta( $delete_id, $meta_key, $meta_value = '' ) {
 	return delete_metadata( 'delete', $delete_id, $meta_key, $meta_value );
 }
 
+function unlink_delete_meta( $delete_id, $meta_key, $meta_value = '' ) {
+	
+	$the_delete = wp_is_delete_revision( $delete_id );
+	if ( $the_delete ) {
+		$delete_id = $the_delete;
+	}
+
+	return unlink_metadata( 'delete', $delete_id, $meta_key, $meta_value );
+}
+
+function unset_delete_meta( $delete_id, $meta_key, $meta_value = '' ) {
+	
+	$the_delete = wp_is_delete_revision( $delete_id );
+	if ( $the_delete ) {
+		$delete_id = $the_delete;
+	}
+
+	return unset_metadata( 'delete', $delete_id, $meta_key, $meta_value );
+}
+
 function delete_post_meta( $post_id, $meta_key, $meta_value = '' ) {
 	
 	$the_post = wp_is_post_revision( $post_id );
@@ -343,6 +546,26 @@ function delete_post_meta( $post_id, $meta_key, $meta_value = '' ) {
 	}
 
 	return delete_metadata( 'post', $post_id, $meta_key, $meta_value );
+}
+
+function unlink_post_meta( $post_id, $meta_key, $meta_value = '' ) {
+	
+	$the_post = wp_is_post_revision( $post_id );
+	if ( $the_post ) {
+		$post_id = $the_post;
+	}
+
+	return unlink_metadata( 'post', $post_id, $meta_key, $meta_value );
+}
+
+function unset_post_meta( $post_id, $meta_key, $meta_value = '' ) {
+	
+	$the_post = wp_is_post_revision( $post_id );
+	if ( $the_post ) {
+		$post_id = $the_post;
+	}
+
+	return unset_metadata( 'post', $post_id, $meta_key, $meta_value );
 }
 
 ?>
